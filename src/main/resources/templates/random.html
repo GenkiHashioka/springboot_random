@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ランダム文字列ジェネレータ</title>
+</head>
+<body>
+  <!-- 見出し -->
+  <h1>ランダム文字列ジェネレータ</h1>
+  <!-- postリクエスト用のform -->
+  <form action="/generate" method="post">
+
+    <p>
+      <select name="charLength">
+        <!-- 文字数をth:eachで指定この場合だとoptionに5~10文字の範囲でセレクトボックスの値の範囲が指定できる -->
+        <option th:each="i : ${#numbers.sequence(5,10)}" th:value="${i}" th:text="${i}+'文字'"></option>
+      </select>
+      <!-- チェックボックス。チェックするとwithNumber=1が送信される -->
+      <input type="checkbox" name="withNumber" value="1">数字を含める
+    </p>
+
+    <p>
+      <!-- 作成ボタンこのボタンを押すとpostリクエストが送信される。 -->
+      <input type="submit" value="作成する">
+    </p>
+  </form>
+  <!-- 水平線の挿入 -->
+  <hr>
+  <!-- 結果テーブル -->
+  <table>
+    <!-- str(変数名)にcontrollerのrandListに格納された値を順番に取り出す。 -->
+    <tr th:each="str:${randList}">
+      <td th:text="${str}"></td>
+    </tr>
+  </table>
+</body>
+</html>
